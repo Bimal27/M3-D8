@@ -14,6 +14,19 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">Strive CRUD Agenda</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-link active" href="#">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="M3-D8.html">Backoffice</a>
+            </div>
+        </div>
+    </nav>
 
     <div class="container">
         <h1 class="text-align-center">Amazon New Product</h1>
@@ -61,7 +74,6 @@
                 imageUrl: document.getElementById("imageUrl").value,
                 price: document.getElementById("price").value,
             }
-
             const resp = await fetch("https://striveschool-api.herokuapp.com/api/product/", {
                 method: "POST",
                 body: JSON.stingify(myData),
@@ -71,6 +83,9 @@
                 }
 
             })
+        }
+        window.onload = () => {
+            submitEvent()
         }
 
     </script>
