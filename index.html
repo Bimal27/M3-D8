@@ -34,7 +34,7 @@
 
             <div class="col-md-6">
                 <h2 class="mt-5 mb-3">Backoffice </h2>
-                <form onsubmit="submitEvent(event)">
+                <form>
                     <div class="form-group">
                         <label for="name">Product Name</label>
                         <input id="name" type="text" class="form-control" aria-describedby="name field" required>
@@ -59,35 +59,47 @@
                             required>
 
                     </div>
-                    <button type="submit" class="btn btn-primary">Add</button>
+                    <button type="submit" class="btn btn-primary" onclick="products(event)">Add</button>
                 </form>
             </div>
         </div>
     </div>
     <script>
-        const submitEvent = async function (event) {
-            event.preventDefault()
-            const myData = {
-                name: document.getElementById("name").value,
-                description: document.getElementById("description").value,
-                brand: document.getElementById("brand").value,
-                imageUrl: document.getElementById("imageUrl").value,
-                price: document.getElementById("price").value,
-            }
-            const resp = await fetch("https://striveschool-api.herokuapp.com/api/product/", {
-                method: "POST",
-                body: JSON.stingify(myData),
-                headers: {
-                    "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNzMzNGIzNTgxNzAwMTVjMjI3NWIiLCJpYXQiOjE2MjUwNjAxNDksImV4cCI6MTYyNjI2OTc0OX0.2xNHXf9OBizeTrLnb2mu8ovdiG1mjyDA6YITX1WGpR4",
-                    "Content-Type": "application/json",
+
+        const url = "https://striveschool-api.herokuapp.com/api/product/"
+        const headers = new Headers({
+            "Content-Type": "application/json",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNzMzNGIzNTgxNzAwMTVjMjI3NWIiLCJpYXQiOjE2MjUxNjIwNTMsImV4cCI6MTYyNjM3MTY1M30.beCRMnbWPQW-tGl2Q-9pdjNOoUxLGfP9vsDs2MZE1l0"
+
+        })
+        const products = (e) => {
+            e.preventDefault()
+            try {
+
+                let dataFromForm = {
+                    name: document.querySelector('#name').value,
+                    description: document.querySelector('#description').value,
+                    brand: document.querySelector('#brand').value,
+                    imageUrl: document.querySelector('#imageUrl').value,
+                    price: document.querySelector('#price').value,
                 }
+                console.log(dataFromForm)
 
-            })
+                fetch(url, {
+                    method: "POST",
+                    body: JSON.stringify(dataFromForm),//get Information from the form in object format,
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MGRjNzMzNGIzNTgxNzAwMTVjMjI3NWIiLCJpYXQiOjE2MjUxNjIwNTMsImV4cCI6MTYyNjM3MTY1M30.beCRMnbWPQW-tGl2Q-9pdjNOoUxLGfP9vsDs2MZE1l0"
+                    }
+                })
+                    .then(resp => resp.json())
+                    .then(data => console.log(data))
+                    .catch(error => console.log(error))
+            } catch (err) {
+                alert(err)
+            }
         }
-        window.onload = () => {
-            submitEvent()
-        }
-
     </script>
 
 
